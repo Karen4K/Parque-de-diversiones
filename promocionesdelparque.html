@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promociones que hay en el parque</title>
+    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="styles_menu.css">
+</head>
+<body>
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <a href="#" class="enlace">
+            <img src="logo.jpg" alt="" class="logo" width="20%">
+        </a>
+        <ul>
+            <li><a class="active" href="registro_clientes.html">Registro clientes</a></li>
+            <li><a href="Gestion_reservaciones.html">Gestion Reservaciones</a></li>
+            <li><a href="promocionesdelparque.html">Promociones del parque</a></li>
+            <li><a href=".html">Adaptadores de red</a></li>
+            <li><a href=".html">Repetidores</a></li>
+            <li><a href=".html">Hubs</a></li>
+            <li><a href=".html">Bridge</a></li>
+        </ul>
+    </nav>
+
+    <div class="contenedor-promociones">
+        <div class="promo">
+            <img src="senderismo.jpg" alt="Senderismo a Caballo">
+            <button onclick="window.location.href='senderismoacaballo.html'">+ Información</button>
+        </div>
+        <div class="promo">
+            <img src="cena.jpeg" alt="Cena Romántica">
+            <button onclick="window.location.href='cenaromantica.html'">+ Información</button>
+        </div>
+        <div class="promo">
+            <img src="cabaña.jpeg" alt="Cabaña con Alberca">
+            <button onclick="window.location.href='cabañaconalberca.html'">+ Información</button>
+        </div>
+        <div class="promo">
+            <img src="dysney.jpeg" alt="Show de Disney">
+            <button onclick="window.location.href='showdedysney.html'">+ Información</button>
+        </div>
+    </div>
+
+    <button onclick="verRegistrosOcupacion()">Ver Registros de Ocupación</button>
+    <button onclick="borrarRegistros()">Borrar Registros</button>
+    <button onclick="window.location.href='gestion_calendario.html'">Gestión de Calendario</button>
+
+    <script src="ocupaciones.js"></script>
+</body>
+</html>

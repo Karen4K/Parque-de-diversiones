@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de reservaciones</title>
+    <link rel="stylesheet" href="styles_menu.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs
+    /font-awsome/5.13.0/css/all.min.css" 
+    rel="stylesheet">
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, rgb(10, 10, 30), rgb(25, 25, 75));
+            color: white;
+        }
+
+        .body {
+            padding: 20px;
+        }
+
+        .lugares {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .lugares div {
+            width: 200px;
+            text-align: center;
+        }
+
+        .lugares img {
+            width: 100%;
+            height: auto;
+        }
+
+        .Bienvenida img {
+            width: 30%;
+            height: auto;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Estilos del modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+            color: black;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover, .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        // Cantidades iniciales
+        let cant_cabana = 10;
+        let ocupadas_cabana = 2;
+        let cant_senderismo = 5;
+        let ocupadas_senderismo = 3;
+        let cant_cena_r = 12;
+        let ocupadas_cena_r = 2;
+        let cant_show = 4;
+        let ocupadas_show = 1;
+
+        let tipoReservacion = ''; // Para guardar el tipo de reservación seleccionada
+
+        // Función para mostrar el modal
+        function mostrarModal(tipo) {
+            tipoReservacion = tipo;
+            const modal = document.getElementById("modalReservacion");
+            modal.style.display = "block";
+        }
+
+        // Función para cerrar el modal
+        function cerrarModal() {
+            const modal = document.getElementById("modalReservacion");
+            modal.style.display = "none";
+        }
+
+        // Función para procesar la reservación
+        function procesarReservacion() {
+            const nombre = document.getElementById('nombreReservante').value;
+            const dia = document.getElementById('diaReservacion').value;
+            const hora = document.getElementById('horaReservacion').value;
+
+            if (!nombre || !dia || !hora) {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            switch(tipoReservacion) {
+                case 'cabaña':
+                    if (ocupadas_cabana < cant_cabana) {
+                        ocupadas_cabana++;
+                        alert(`Reservación de cabaña añadida para ${nombre} el ${dia} a las ${hora}.`);
+                        document.getElementById('ocupadas_cabana').innerText = ocupadas_cabana;
+                        document.getElementById('disponibles_cabana').innerText = cant_cabana - ocupadas_cabana;
+                    } else {
+                        alert("No hay cabañas disponibles.");
+                    }
+                    break;
+                case 'senderismo':
+                    if (ocupadas_senderismo < cant_senderismo) {
+                        ocupadas_senderismo++;
+                        alert(`Reservación de caminata añadida para ${nombre} el ${dia} a las ${hora}.`);
+                        document.getElementById('ocupadas_senderismo').innerText = ocupadas_senderismo;
+                        document.getElementById('disponibles_senderismo').innerText = cant_senderismo - ocupadas_senderismo;
+                    } else {
+                        alert("No hay caminatas disponibles.");
+                    }
+                    break;
+                case 'cena':
+                    if (ocupadas_cena_r < cant_cena_r) {
+                        ocupadas_cena_r++;
+                        alert(`Reservación de cena añadida para ${nombre} el ${dia} a las ${hora}.`);
+                        document.getElementById('ocupadas_cena').innerText = ocupadas_cena_r;
+                        document.getElementById('disponibles_cena').innerText = cant_cena_r - ocupadas_cena_r;
+                    } else {
+                        alert("No hay mesas disponibles.");
+                    }
+                    break;
+                case 'show':
+                    if (ocupadas_show < cant_show) {
+                        ocupadas_show++;
+                        alert(`Reservación de show añadida para ${nombre} el ${dia} a las ${hora}.`);
+                        document.getElementById('ocupadas_show').innerText = ocupadas_show;
+                        document.getElementById('disponibles_show').innerText = cant_show - ocupadas_show;
+                    } else {
+                        alert("No hay shows disponibles.");
+                    }
+                    break;
+            }
+
+            cerrarModal(); // Cerrar el modal después de la reservación
+        }
+    </script>
+</head>
+<body>
+
+    <nav>
+        <input type="checkbox" id="check">
+        <label for="check" class="checkbtn">
+            <i class="fas fa-bars"></i>
+        </label>
+        <a href="#" class="enlace">
+            <img src="logo.jpg" alt="" class="logo" width="20%">
+        </a>
+        <ul>
+            <li><a class="active" href="registro_clientes.html">Registro clientes</a></li>
+            <li><a href="Gestion_reservaciones.html">Gestion Reservaciones</a></li>
+            <li><a href="promocionesdelparque.html">Promociones del parque</a></li>
+                <li><a href=".html">Adaptadores de red</a></li>
+                <li><a href=".html">Repetidores</a></li>
+                <li><a href=".html">Hubs</a></li>
+                <li><a href=".html">Bridge</a></li>
+        </ul>
+    </nav>
+
+    <div class="body">
+        <div class="Bienvenida">
+            <center><h1>Gestión de reservaciones</h1></center>
+            <center><img src="FONDO (2).png" alt="parque_fondo"></center>
+        </div>
+
+        <div class="lugares">
+            <div class="cabanas">
+                <img src="cabaña.jpeg" alt="cabaña">
+                <h3>Cabañas totales: <span id="totales_cabana">10</span></h3>
+                <h4>Cabañas ocupadas: <span id="ocupadas_cabana">2</span></h4>
+                <h4>Cabañas desocupadas: <span id="disponibles_cabana">8</span></h4>
+                <button onclick="mostrarModal('cabaña')">Agregar reservación</button>
+            </div>
+
+            <div class="senderismo">
+                <img src="senderismo.jpg" alt="senderismo">
+                <h3>Caminatas totales: <span id="totales_senderismo">5</span></h3>
+                <h4>Caminatas ocupadas: <span id="ocupadas_senderismo">3</span></h4>
+                <h4>Caminatas desocupadas: <span id="disponibles_senderismo">2</span></h4>
+                <button onclick="mostrarModal('senderismo')">Agregar reservación</button>
+            </div>
+
+            <div class="Cena_romantica">
+                <img src="cena.jpeg" alt="cena">
+                <h3>Mesas totales: <span id="totales_cena">12</span></h3>
+                <h4>Mesas ocupadas: <span id="ocupadas_cena">2</span></h4>
+                <h4>Mesas desocupadas: <span id="disponibles_cena">10</span></h4>
+                <button onclick="mostrarModal('cena')">Agregar reservación</button>
+            </div>
+
+            <div class="show_disney">
+                <img src="castillo.jpeg" alt="show">
+                <h3>Shows de Disney totales: <span id="totales_show">4</span></h3>
+                <h4>Shows ocupados: <span id="ocupadas_show">1</span></h4>
+                <h4>Shows desocupados: <span id="disponibles_show">3</span></h4>
+                <button onclick="mostrarModal('show')">Agregar reservación</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar reservación -->
+    <div id="modalReservacion" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2>Agregar Reservación</h2>
+            <form>
+                <label for="nombreReservante">Nombre del reservante:</label><br>
+                <input type="text" id="nombreReservante" name="nombreReservante"><br><br>
+                <label for="diaReservacion">Día de la reservación:</label><br>
+                <input type="date" id="diaReservacion" name="diaReservacion"><br><br>
+                <label for="horaReservacion">Hora de la reservación:</label><br>
+                <input type="time" id="horaReservacion" name="horaReservacion"><br><br>
+                <button type="button" onclick="procesarReservacion()">Confirmar reservación</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
