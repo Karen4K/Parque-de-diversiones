@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (registros[promocion].includes(fecha)) {
-            alert("Esta fecha ya está ocupada para esta promoción.");
+            alert("Esta fecha ya está ocupada porfavor elige otra");
         } else {
             registros[promocion].push(fecha);
             localStorage.setItem('ocupaciones', JSON.stringify(registros));

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de calendario</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            width: 50px;
+            height: 50px;
+        }
+        .ocupada {
+            background-color: red;
+            color: white;
+            cursor: not-allowed;
+        }
+        .libre {
+            background-color: green;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestión de Calendario</h1>
+    <table id="calendar">
+        <thead>
+            <tr>
+                <th>Domingo</th>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+            </tr>
+        </thead>
+        <tbody id="calendar-body">
+        
+        </tbody>
+    </table>
+    <button onclick="window.location.href='promocionesdelparque.html'">Volver</button>
+
+    <script>
+
+        function generarCalendario(mes, año) {
+            let primerDia = new Date(año, mes, 1).getDay();
+            let diasEnMes = new Date(año, mes + 1, 0).getDate();
+            let tablaCalendario = document.getElementById('calendar-body');
+            tablaCalendario.innerHTML = ""; 
+
+            let fila = document.createElement('tr');
+            let registros = JSON.parse(localStorage.getItem('ocupaciones')) || {};
+
+            function esFechaOcupada(dia) {
+                let fecha = new Date(año, mes, dia).toISOString().split('T')[0];
+                for (let promocion in registros) {
+                    if (registros[promocion].includes(fecha)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            for (let i = 0; i < primerDia; i++) {
+                let celdaVacia = document.createElement('td');
+                fila.appendChild(celdaVacia);
+            }
+
+            for (let dia = 1; dia <= diasEnMes; dia++) {
+                if (fila.children.length === 7) {
+                    tablaCalendario.appendChild(fila);
+                    fila = document.createElement('tr');
+                }
+
+                let celda = document.createElement('td');
+                celda.textContent = dia;
+
+                if (esFechaOcupada(dia)) {
+                    celda.classList.add('ocupada');
+                    celda.title = 'Fecha Ocupada';
+                } else {
+                    celda.classList.add('libre');
+                    celda.title = 'Fecha Libre';
+                    celda.addEventListener('click', function() {
+                        alert('Esta fecha está disponible.');
+                    });
+                }
+
+                fila.appendChild(celda);
+            }
+
+            tablaCalendario.appendChild(fila);
+        }
+
+        let fechaActual = new Date();
+        generarCalendario(fechaActual.getMonth(), fechaActual.getFullYear());
+    </script>
+</body>
+</html>
